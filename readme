@@ -1,0 +1,3 @@
+Use JavaScript to switch between scenes: Hide/show groups of entities.
+Use routing: Create separate HTML files for each scene and use navigation (e.g., links or a router).
+Use a component: Some community components manage scene switching.
