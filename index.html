@@ -1,382 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VR/XR Scenes App</title>
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-curved-text/dist/aframe-curved-text.min.js"></script>
+  <title>VR/XR Scenes Home</title>
   <style>
-    #scene-nav {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 10;
-      background: rgba(255,255,255,0.8);
-      padding: 10px;
-      border-radius: 8px;
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
     }
-    #scene-nav button {
-      margin: 2px;
-      padding: 6px 10px;
-      border-radius: 4px;
-      border: none;
-      background: #4caf50;
-      color: #fff;
-      cursor: pointer;
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    #scene-nav button.active {
-      background: #1976d2;
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
     }
-    #island-nav {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 20;
-      background: rgba(255,255,255,0.8);
-      padding: 10px;
-      border-radius: 8px;
+
+    .scene-link {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+      transition: background-color 0.3s ease;
     }
-    #island-nav button {
-      margin: 2px;
-      padding: 6px 10px;
-      border-radius: 4px;
-      border: none;
-      background: #007bff;
-      color: #fff;
-      cursor: pointer;
-    }
-    #island-nav button.active {
-      background: #0056b3;
+
+    .scene-link:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
+
 <body>
-  <!-- Camera switcher UI OUTSIDE the scene -->
-  <div id="island-nav" style="position:absolute;top:10px;right:10px;z-index:20;background:rgba(255,255,255,0.8);padding:10px;border-radius:8px;">
-    <button onclick="switchToIsland('main-camera')">Main</button>
-    <button onclick="switchToIsland('island1-camera')">Island 1</button>
-    <button onclick="switchToIsland('island2-camera')">Island 2</button>
-    <button onclick="switchToIsland('island3-camera')">Island 3</button>
-    <button onclick="switchToIsland('island5-camera')">Island 5</button>
-    <button onclick="switchToIsland('island6-camera')">Island 6</button>
-    <button onclick="switchToIsland('island7-camera')">Island 7</button>
+  <div class="container">
+    <h1>Welcome to the VR/XR Experience</h1>
+    <p>Loading the VR scenes...</p>
+    <a href="main-scene.html" class="scene-link">Go to Main Island Scene</a>
+    <a href="island5-tent-scene.html" class="scene-link">Go to Island 5 Tent Scene</a>
   </div>
 
-  <a-scene cursor="rayOrigin: mouse">
-    <a-assets>
-      <video id="video1" src="assets/videos/Izaura.mp4" crossorigin="anonymous"></video>
-      <video id="video2" src="assets/videos/Lullaby.mp4" crossorigin="anonymous"></video>
-      <video id="video3" src="assets/videos/Rich.mp4" crossorigin="anonymous"></video>
-      <video id="video4" src="assets/videos/SantaBarbara.mp4" crossorigin="anonymous"></video>
-
-      <!-- Panorama Gallery Images -->
-      <img id="gallery1" src="assets/images/NY.jpg">
-      <img id="gallery2" src="assets/images/autumn.jpeg">
-      <img id="gallery3" src="assets/images/bowl.jpg">
-      <img id="gallery4" src="assets/images/climbing.jpg">
-      <img id="gallery5" src="assets/images/fall.jpg">
-      <img id="gallery6" src="assets/images/foxesBread.jpg">
-      <img id="gallery7" src="assets/images/mushrooms.png">
-      <img id="gallery8" src="assets/images/newYear.jpg">
-      <img id="gallery9" src="assets/images/paperBoat.jpg">
-      <img id="gallery10" src="assets/images/foxesBread.jpg">
-      <img id="gallery11" src="assets/images/pies.jpeg">
-      <img id="gallery12" src="assets/images/sekret.jpg">
-      <img id="gallery13" src="assets/images/shoes.jpg">
-      <img id="gallery14" src="assets/images/NYparty.jpg">
-      <img id="gallery15" src="assets/images/strawberries.jpg">
-      <img id="gallery16" src="assets/images/wounds.jpg">
-      <!-- Add more images as needed -->
-    </a-assets>
-    <a-entity camera look-controls position="0 1.6 0">
-      <a-cursor
-        fuse="true"
-        fuse-timeout="500"
-        raycaster="objects: .clickable"
-        material="color: #1976d2; shader: flat">
-      </a-cursor>
-    </a-entity>
-
-    <!-- Replace the panorama sky with a plain yellow sky -->
-    <a-sky color="#ffe066" radius="500"></a-sky>
-
-    <!-- Endless road (long thin box as a simple road) -->
-    <a-box position="0 0.05 -10" depth="100" height="0.1" width="1.5" color="#888"></a-box>
-
-    <!-- Left island (plain) -->
-    <a-circle position="-3 0.01 -5" radius="1" color="#e0e0e0" rotation="-90 0 0"></a-circle>
-    <!-- Right island (plain) -->
-    <a-circle position="3 0.01 -5" radius="1" color="#e0e0e0" rotation="-90 0 0"></a-circle>
-
-    <!-- Island 2 -->
-    <a-circle position="3 0.01 -12" radius="1.2" color="#e3f2fd" rotation="-90 0 0"></a-circle>
-    <a-gltf-model 
-      src="assets/objects/pinwheel.glb" 
-      position="3 0.2 -12" 
-      scale="0.5 0.5 0.5"
-      class="clickable"
-      id="pinwheel-model">
-    </a-gltf-model>
-
-    <!-- Island 3 -->
-    <a-circle position="-6 0.01 -15" radius="1.2" color="#ffe0f0" rotation="-90 0 0"></a-circle>
-    <a-gltf-model 
-      src="assets/objects/teddy_bear.glb" 
-      position="-6 0.2 -15" 
-      scale="1 1 1"
-      class="clickable"
-      id="teddy-bear-model">
-    </a-gltf-model>
-
-    <!-- Island 5 -->
-    <a-circle position="6 0.01 -20" radius="3" color="#e0ffe0" rotation="-90 0 0"></a-circle>
-    <a-gltf-model src="assets/objects/kayak.glb" position="7 0.3 -20" scale="1 1 1"></a-gltf-model>
-    <a-gltf-model src="assets/objects/diorama.glb" position="5 1 -21" scale="0.2 0.2 0.2"></a-gltf-model>
-    <a-gltf-model src="assets/objects/camping_tent.glb" position="6 1 -19" scale="1 1 1"></a-gltf-model>
-    <a-gltf-model src="assets/objects/strawberry.glb" position="6 -0.1 -21" scale="0.1 0.1 0.1"></a-gltf-model>
-
-    <!-- Media player bubbles on island 5 -->
-    <a-entity position="6 2 -20">
-      <!-- Play circle -->
-      <a-circle 
-        color="#FFC107" 
-        radius="0.15" 
-        position="-0.25 0 0.01"
-        class="clickable"
-        id="play-bubble">
-        <a-text value="play" align="center" color="#fff" position="0 0 0.08" width="2" side="double"></a-text>
-      </a-circle>
-      <!-- Pause circle -->
-      <a-circle 
-        color="#1976D2" 
-        radius="0.15" 
-        position="0.25 0 0.01"
-        class="clickable"
-        id="pause-bubble">
-        <a-text value="stop" align="center" color="#fff" position="0 0 0.08" width="2" side="double"></a-text>
-      </a-circle>
-      <audio id="laforet-audio" src="assets/music/Laforet.m4a"></audio>
-    </a-entity>
-
-    <!-- Island 6 -->
-    <a-circle position="-8 0.01 -25" radius="2" color="#e0f7fa" rotation="-90 0 0"></a-circle>
-
-    <!-- Island 7: move TV, screen, and chair here -->
-    <a-circle position="12 0.01 -30" radius="2" color="#f3e5f5" rotation="-90 0 0"></a-circle>
-    <a-gltf-model src="assets/objects/tv.glb" position="12 1 -30" scale="1 1 1"></a-gltf-model>
-    <a-video 
-      id="tv-video-2"
-      src="#video1"
-      position="12 1.25 -29.98"
-      width="1.2"
-      height="0.7"
-      rotation="0 0 0"
-      material="shader: flat">
-    </a-video>
-    <a-gltf-model src="assets/objects/chair.glb" position="12 0.5 -28" scale="1 1 1" rotation="0 180 0"></a-gltf-model>
-
-    <!-- Add this camera entity for a fixed view at island 7 (TV/chair) -->
-    <a-entity 
-      id="island7-camera" 
-      camera 
-      look-controls 
-      wasd-controls 
-      position="12 1.6 -26" 
-      rotation="0 -20 0"
-      visible="false">
-    </a-entity>
-
-    <!-- Island 7 Camera -->
-    <a-entity id="island7-camera" camera look-controls position="12 1.6 -30" visible="false">howScene(num) {
-      <a-cursor
-        fuse="true"etAttribute('visible', i === num);
-        fuse-timeout="500" document.getElementById('btn' + i).classList.toggle('active', i === num);
-        raycaster="objects: .clickable" }
-        material="color: #1976d2; shader: flat">      // Move camera for Scene 3 to face island 5
-      </a-cursor>
-    </a-entity>
-
-    <!-- Add a camera entity for each island, positioned for a good view. Set all to visible="false" except the main camera. -->
-
-    <!-- Main camera (already present, keep as is) -->
-    <a-entity id="main-camera" camera look-controls wasd-controls position="0 1.6 10" rotation="0 180 0" visible="true">
-      <a-cursor
-        fuse="true"
-        fuse-timeout="500"
-        raycaster="objects: .clickable"
-        material="color: #1976d2; shader: flat">
-      </a-cursor>
-    </a-entity>
-    <a-entity id="island1-camera" camera look-controls position="-3 1.6 -6" rotation="0 0 0" visible="false"></a-entity>
-    <a-entity id="island2-camera" camera look-controls position="3 1.6 -10" rotation="0 0 0" visible="false"></a-entity>
-    <a-entity id="island3-camera" camera look-controls position="-6 1.6 -13" rotation="0 0 0" visible="false"></a-entity>
-    <a-entity id="island5-camera" camera look-controls position="6 1.6 -17" rotation="0 0 0" visible="false"></a-entity>
-    <a-entity id="island6-camera" camera look-controls position="-8 1.6 -23" rotation="0 0 0" visible="false"></a-entity>
-    <a-entity id="island7-camera" camera look-controls wasd-controls position="12 1.6 -26" rotation="0 -20 0" visible="false"></a-entity>
-
-    <!-- Replace your current gallery-museum entity with this version for proportional sizing and a circular layout -->
-
-    <a-entity id="gallery-museum">
-      <a-entity id="gallery-planes"></a-entity>
-    </a-entity>
-
-    <script>
-      // List of gallery images and their aspect ratios (width/height)
-      const galleryData = [
-        { id: "#gallery1", ratio: 1.5 },
-        { id: "#gallery2", ratio: 1.6 },
-        { id: "#gallery3", ratio: 1.3 },
-        { id: "#gallery4", ratio: 1.4 },
-        { id: "#gallery5", ratio: 1.5 },
-        { id: "#gallery6", ratio: 1.7 },
-        { id: "#gallery7", ratio: 1.2 },
-        { id: "#gallery8", ratio: 1.5 },
-        { id: "#gallery9", ratio: 1.6 },
-        { id: "#gallery10", ratio: 1.3 },
-        { id: "#gallery11", ratio: 1.4 },
-        { id: "#gallery12", ratio: 1.5 },
-        { id: "#gallery13", ratio: 1.7 },
-        { id: "#gallery14", ratio: 1.2 },
-        { id: "#gallery15", ratio: 1.5 },
-        { id: "#gallery16", ratio: 1.6 }
-      ];
-
-      // Gallery layout parameters
-      const radius = 25; // Radius of the circle
-      const centerY = 2; // Height of the gallery
-      const centerZ = -40; // Z position of the gallery center
-      const planeHeight = 3; // Standard height for all images
-
-      const galleryEntity = document.getElementById('gallery-planes');
-      let planes = [];
-
-      // Create planes and store references
-      galleryData.forEach((img, i) => {
-        const theta = (i / galleryData.length) * Math.PI * 2;
-        const x = Math.cos(theta) * radius;
-        const z = centerZ + Math.sin(theta) * radius;
-        const y = centerY;
-        const width = planeHeight * img.ratio;
-
-        const plane = document.createElement('a-plane');
-        plane.setAttribute('src', img.id);
-        plane.setAttribute('width', width);
-        plane.setAttribute('height', planeHeight);
-        plane.setAttribute('color', '#fff');
-        plane.setAttribute('material', 'side:double');
-        plane.setAttribute('position', `${x} ${y} ${z}`);
-        plane.setAttribute('rotation', `0 ${-theta * 180 / Math.PI + 90} 0`);
-        galleryEntity.appendChild(plane);
-        planes.push(plane);
-      });
-
-      // Make the gallery rotate constantly and swap images as they pass the front
-      const museum = document.getElementById('gallery-museum');
-      let galleryAngle = 0;
-      let lastFrontIndex = -1;
-
-      function rotateGallery() {
-        galleryAngle += 0.1; // Adjust speed here
-        museum.setAttribute('rotation', `0 ${galleryAngle} 0`);
-
-        // Find which plane is at the front (closest to z=0 in world space)
-        let minDiff = Infinity;
-        let frontIndex = 0;
-        planes.forEach((plane, i) => {
-          // Get the current angle for this plane
-          const theta = (i / galleryData.length) * Math.PI * 2 - (galleryAngle * Math.PI / 180);
-          // Calculate the world z position (ignoring y)
-          const z = centerZ + Math.sin(theta) * radius;
-          // The closer z is to 0, the more "front" it is
-          const diff = Math.abs(z);
-          if (diff < minDiff) {
-            minDiff = diff;
-            frontIndex = i;
-          }
-        });
-
-        // Highlight the front plane (optional: e.g. make it bigger or add a border)
-        planes.forEach((plane, i) => {
-          if (i === frontIndex) {
-            plane.setAttribute('scale', '1.2 1.2 1.2');
-            plane.setAttribute('color', '#fff');
-          } else {
-            plane.setAttribute('scale', '1 1 1');
-            plane.setAttribute('color', '#fff');
-          }
-        });
-
-        lastFrontIndex = frontIndex;
-        requestAnimationFrame(rotateGallery);
-      }
-      rotateGallery();
-    </script>
-
-    <!-- Remove Island 1 circle and bagel island text entity -->
-
-    <!-- Place this where you want the bagel in your scene, e.g. near the center or a special spot -->
-    <a-gltf-model 
-      id="bagel-model"
-      src="assets/objects/bagel.glb"
-      position="0 2 -10"
-      scale="2.5 2.5 2.5"
-      rotation="0 0 0">
-    </a-gltf-model>
-
-    <!-- Curved text on the bagel using aframe-curved-text (add the script if not already included) -->
-    <a-entity
-      position="0 2 -10"
-      rotation="0 0 0">
-      <a-entity
-        curved-text="value: They say childhood isn’t over as long as your hand can still fit through a bagel’s hole; radius: 1.3; height: 0.3; color: #333; align: center; wrapCount: 60;">
-      </a-entity>
-    </a-entity>
-
-    <script>
-      // Remove the old bagel island and text entity from your scene if present!
-
-      // Bagel rotation (opposite direction to gallery)
-      let bagelAngle = 0;
-      function rotateBagel() {
-        bagelAngle -= 0.1; // Opposite direction to gallery
-        const bagel = document.getElementById('bagel-model');
-        if (bagel) bagel.setAttribute('rotation', `0 ${bagelAngle} 0`);
-        // Also rotate the text entity to match the bagel
-        const bagelText = document.querySelector('[curved-text]');
-        if (bagelText) bagelText.parentEl.setAttribute('rotation', `0 ${bagelAngle} 0`);
-        requestAnimationFrame(rotateBagel);
-      }
-      rotateBagel();
-    </script>
-  </a-scene>
-
-  <!-- Fix for camera switcher buttons not working -->
-
-  <!-- 1. Remove duplicate island7-camera entities! Only keep one with your desired position/rotation. -->
-  <!-- 2. Make sure all camera entities have unique IDs. -->
-  <!-- 3. The main camera must have id="main-camera" and visible="true" by default. -->
-  <!-- 4. The switchToIsland function must be defined in the global scope (outside <a-scene>). -->
-
-  <!-- Example: Place this script just before </body> -->
-  <script>
-    function switchToIsland(cameraId) {
-      // Hide all cameras
-      document.querySelectorAll('[camera]').forEach(cam => cam.setAttribute('visible', false));
-      // Show the selected camera
-      var cam = document.getElementById(cameraId);
-      if (cam) cam.setAttribute('visible', true);
-
-      // Optional: highlight active button
-      document.querySelectorAll('#island-nav button').forEach(btn => btn.classList.remove('active'));
-      var btn = Array.from(document.querySelectorAll('#island-nav button')).find(b => b.onclick && b.onclick.toString().includes(cameraId));
-      if (btn) btn.classList.add('active');
-    }
-
-    // Switch to the main camera on page load
-    window.addEventListener('DOMContentLoaded', function() {
-      switchToIsland('main-camera');
-    });
-  </script>
 </body>
+
 </html>
